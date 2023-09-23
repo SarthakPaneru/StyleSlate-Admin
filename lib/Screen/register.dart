@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import '../config/api_requests.dart';
 import '/Screen/login.dart';
 import '/Widgets/appbar.dart';
 import '/Widgets/buttons.dart';
 import '/Widgets/colors.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:http/http.dart' as http;
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -23,6 +25,7 @@ class _RegisterState extends State<Register> {
 
   final TextEditingController _confirmpasswordController =
       TextEditingController();
+  final ApiRequests _apiRequests = ApiRequests();
 
   @override
   void dispose() {
@@ -35,7 +38,7 @@ class _RegisterState extends State<Register> {
     super.dispose();
   }
 
-  void _register() {
+  Future<void> _register() async {
     String firstname = _firstNameController.text;
     String lastname = _lastNameController.text;
     String email = _emailController.text;
@@ -112,6 +115,26 @@ class _RegisterState extends State<Register> {
       );
       return;
     }
+    http.Response response =  await _apiRequests.register(
+      email,password,confirmpassword,firstname,lastname
+    );
+    print('status code: ${response.statusCode}');
+    print('Payload: ${response.body}');
+    if (response.statusCode == 201){
+
+       //sucessfully register
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context){
+        return const Login();
+      },
+      ),
+    );
+    }else {
+      //handle login failure
+      print('Registration failed with code: ${response.statusCode}');
+    }
+   
+
     _firstNameController.clear();
     _lastNameController.clear();
     _emailController.clear();

@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-
-
-
 import 'api_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -36,7 +33,8 @@ class ApiRequests {
       'password': password,
       'confirmPassword': confirmPassword,
       'firstName': firstName,
-      'lastName': lastName
+      'lastName': lastName,
+      'userRole': 'BARBER'
     };
     final jsonPayload = jsonEncode(payload);
 
