@@ -1,6 +1,8 @@
 import 'dart:convert';
-import 'package:hamro_barber_mobile/constants/app_constants.dart';
+
 import 'package:http/http.dart' as http;
+
+import 'app_constants.dart';
 
 class ApiService {
   void processData(String responseData) {

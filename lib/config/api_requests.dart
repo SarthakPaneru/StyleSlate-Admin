@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:hamro_barber_mobile/constants/app_constants.dart';
-import 'package:hamro_barber_mobile/core/auth/login.dart';
 import 'api_service.dart';
 import 'package:http/http.dart' as http;
+
+import 'app_constants.dart';
 
 class ApiRequests {
   final ApiService _apiService = ApiService();
@@ -33,7 +33,8 @@ class ApiRequests {
       'password': password,
       'confirmPassword': confirmPassword,
       'firstName': firstName,
-      'lastName': lastName
+      'lastName': lastName,
+      'userRole': 'BARBER'
     };
     final jsonPayload = jsonEncode(payload);
 
