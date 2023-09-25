@@ -1,3 +1,5 @@
+import 'package:barberside/Screen/profile/profile_menu.dart';
+import 'package:barberside/Screen/profile/profile_screen.dart';
 import 'package:barberside/Screen/register.dart';
 import 'package:email_validator/email_validator.dart';
 import 'dart:convert';
@@ -110,7 +112,7 @@ class _LoginState extends State<Login> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return  ScheduledAppointmentPage();
+                return  ProfileScreen();
               },
             ),
           );
