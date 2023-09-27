@@ -7,7 +7,7 @@ import 'Screen/geolocation.dart';
 
 void main() {
   runApp( MaterialApp(
-    home: MyHomePage(),
+    home: Mainpage(),
   ));
 }
 
