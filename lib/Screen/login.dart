@@ -21,7 +21,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   bool passwordVisible = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -43,7 +42,6 @@ class _LoginState extends State<Login> {
 
   final ApiService _apiService = ApiService();
   final Token _token = Token();
-
 
   void _validateEmail() {
     String email = _emailController.text.trim();
@@ -72,7 +70,10 @@ class _LoginState extends State<Login> {
     String email = _emailController.text.trim();
     String password = _passwordController.text;
 
-    if (email.isEmpty || password.isEmpty || !isEmailValid || !isPasswordValid) {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        !isEmailValid ||
+        !isPasswordValid) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -94,7 +95,11 @@ class _LoginState extends State<Login> {
     } else {
       {
         // If form is validated the follwing code is executed.
-        final payload = {'email': email, 'password': password};
+        final payload = {
+          'email': email,
+          'password': password,
+          'userRole': 'BARBER'
+        };
         final jsonPayload = jsonEncode(payload);
 
         http.Response response = await _apiService.post(
@@ -110,7 +115,7 @@ class _LoginState extends State<Login> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return  ScheduledAppointmentPage();
+                return ScheduledAppointmentPage();
               },
             ),
           );
@@ -165,7 +170,8 @@ class _LoginState extends State<Login> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: isEmailValid ? Colors.grey.shade400 : Colors.red,
+                          color:
+                              isEmailValid ? Colors.grey.shade400 : Colors.red,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -190,7 +196,9 @@ class _LoginState extends State<Login> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: isPasswordValid ? Colors.grey.shade400 : Colors.red,
+                          color: isPasswordValid
+                              ? Colors.grey.shade400
+                              : Colors.red,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -213,7 +221,9 @@ class _LoginState extends State<Login> {
                             passwordVisible = !passwordVisible;
                           });
                         },
-                        icon: Icon(passwordVisible ? Icons.visibility : Icons.visibility_off),
+                        icon: Icon(passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off),
                       ),
                     ),
                   ),
