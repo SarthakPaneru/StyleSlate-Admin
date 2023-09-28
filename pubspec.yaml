@@ -43,6 +43,7 @@ dependencies:
   heart_toggle: ^0.0.3
   table_calendar: ^3.0.9
   font_awesome_flutter: ^10.2.1
+  geolocator: ^10.1.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,15 @@ flutter:
   assets:
     - lib/assets/barberlogo.png
     - lib/assets/stylist2.png
+    - lib/assets/Profile Image.png
+    - lib/assets/Bell.svg
+    - lib/assets/Camera Icon.svg
+    - lib/assets/Log out.svg
+    - lib/assets/Question mark.svg
+    - lib/assets/Settings.svg
+    - lib/assets/User Icon.svg 
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

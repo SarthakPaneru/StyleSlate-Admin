@@ -1,10 +1,12 @@
+import 'package:barberside/Screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '/Widgets/colors.dart';
 import '/Screen/login.dart';
+import 'Screen/geolocation.dart';
 
 void main() {
-  runApp(const MaterialApp(
+  runApp( MaterialApp(
     home: Mainpage(),
   ));
 }
