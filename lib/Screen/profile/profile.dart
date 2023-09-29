@@ -1,43 +1,55 @@
+import 'dart:io';
+
+import 'package:barberside/config/api_requests.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ProfilePic extends StatelessWidget {
-  const ProfilePic({
-    Key? key,
-  }) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  ApiRequests _apiRequests = ApiRequests();
+  File? _image;
+
+  Future getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    _image = File(pickedFile!.path);
+    _apiRequests.uploadImage(_image!);
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 115,
-      width: 115,
-      child: Stack(
-        fit: StackFit.expand,
-        clipBehavior: Clip.none,
-        children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage("lib/assets/Profile Image.png"),
-          ),
-          Positioned(
-            right: -16,
-            bottom: 0,
-            child: SizedBox(
-              height: 46,
-              width: 46,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white, shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    side: const BorderSide(color: Colors.white),
-                  ),
-                  backgroundColor: const Color(0xFFF5F6F9),
-                ),
-                onPressed: () {},
-                child: SvgPicture.asset("lib/assets/Camera Icon.svg"),
+      height: 300,
+      width: 300,
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                  radius: 80,
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        '${_apiRequests.retrieveImageUrl()}',
+                    placeholder: (context, url) => const Icon(
+                      Icons.person,
+                      size: 80,
+                    ),
+                  )),
+              ElevatedButton(
+                onPressed: getImage,
+                child: const Text('Edit Profile Picture'),
               ),
-            ),
-          )
-        ],
+            ],
+          ),
+        ),
       ),
     );
   }

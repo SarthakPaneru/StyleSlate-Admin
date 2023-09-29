@@ -44,6 +44,11 @@ dependencies:
   table_calendar: ^3.0.9
   font_awesome_flutter: ^10.2.1
   geolocator: ^10.1.0
+  image_picker: ^1.0.1
+  mime: ^1.0.4
+  http_parser: ^4.0.2
+  google_maps_flutter: ^2.5.0
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
@@ -69,15 +74,7 @@ flutter:
 
   #To add assets to your application, add an assets section, like this:
   assets:
-    - lib/assets/barberlogo.png
-    - lib/assets/stylist2.png
-    - lib/assets/Profile Image.png
-    - lib/assets/Bell.svg
-    - lib/assets/Camera Icon.svg
-    - lib/assets/Log out.svg
-    - lib/assets/Question mark.svg
-    - lib/assets/Settings.svg
-    - lib/assets/User Icon.svg 
+    - lib/assets/
 
 
 

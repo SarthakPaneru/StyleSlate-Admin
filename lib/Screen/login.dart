@@ -25,7 +25,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
   bool passwordVisible = false;
@@ -81,7 +80,6 @@ class _LoginState extends State<Login> {
         password.isEmpty ||
         !isEmailValid ||
         !isPasswordValid) {
-
       _showSnackbar('Login failed. Please check your credentials.');
 
       return;
@@ -91,7 +89,7 @@ class _LoginState extends State<Login> {
         final payload = {
           'email': email,
           'password': password,
-          'userRole': 'BARBER'
+          'userRole': "BARBER"
         };
         final jsonPayload = jsonEncode(payload);
 
@@ -108,7 +106,6 @@ class _LoginState extends State<Login> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-
                 return ProfileScreen();
               },
             ),
@@ -150,7 +147,7 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.all(2),
                         height: 150,
                         width: 150,
-                        child: Image.asset('lib/assets/images/barberlogo.png'),
+                        child: Image.asset('lib/assets/barberlogo.png'),
                       ),
                       Text(
                         'Login',

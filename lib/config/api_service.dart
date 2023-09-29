@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 import 'app_constants.dart';
 
@@ -83,5 +86,45 @@ class ApiService {
     } catch (e) {
       return http.Response({"message": e}.toString(), 400);
     }
+  }
+
+  Future<http.Response> postImg(String url, File file) async {
+    try {
+      Uri uri = Uri.parse('${ApiConstants.baseUrl}$url');
+      // Map<String, dynamic> bodyMap = json.decode(body);
+      // String bodyString = json.encode(bodyMap);
+
+      ApiConstants apiConstants = ApiConstants();
+      Map<String, String> headers = await apiConstants.postImgHeaders();
+
+      var request = http.MultipartRequest('PUT', uri);
+      request.headers.addAll(headers);
+
+      // Determine the MIME type of the file dynamically
+      String? mimeType = lookupMimeType(file.path);
+      if (mimeType == null) {
+        print('Unable to determine MIME type of the file.');
+        return http.Response("ERROR UPLOADING FILE", 400);
+      }
+
+      request.files.add(await http.MultipartFile.fromPath('file', file.path,
+          contentType: MediaType.parse(mimeType))); //, contentType: headers))
+      request.send().then((response) {
+        if (response.statusCode == 200) {
+          print("Uploaded!");
+          return response;
+        }
+      });
+      //
+      return http.Response("ERROR UPLOADING FILE", 500);
+    } catch (e) {
+      print(e.toString());
+      return http.Response({"message": e}.toString(), 400);
+    }
+  }
+
+  Future<Uri> fetchProtectedImage(String imageUrl) async {
+    return Uri.parse(imageUrl);
+       
   }
 }
