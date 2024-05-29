@@ -7,28 +7,43 @@ class CompletedAppointments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 5, // Replace with actual data count
+      itemCount: 5, 
       itemBuilder: (context, index) {
         return Card(
-          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          margin: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 16.0,
+          ),
           child: ListTile(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            leading: const Icon(Icons.event_available, color: Colors.green),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10.0,
+            ),
+            leading: const Icon(
+              Icons.event_available,
+              color: Colors.green,
+            ),
             title: Text(
               'Completed Appointment $index',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
             subtitle: Text(
               'Details of Completed Appointment $index',
             ),
-            trailing: const Icon(Icons.check_circle, color: Colors.green),
+            trailing: const Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        AppointmentDetails(appointmentId: 'ID $index')),
+                  builder: (context) => AppointmentDetails(
+                    appointmentId: 'ID $index',
+                  ),
+                ),
               );
             },
           ),
