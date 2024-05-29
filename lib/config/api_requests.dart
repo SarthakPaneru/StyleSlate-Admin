@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+
+import '../auth/customer.dart';
 import 'api_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,8 +36,7 @@ class ApiRequests {
       'password': password,
       'confirmPassword': confirmPassword,
       'firstName': firstName,
-      'lastName': lastName,
-      'userRole': 'BARBER'
+      'lastName': lastName
     };
     final jsonPayload = jsonEncode(payload);
 
@@ -51,17 +53,106 @@ class ApiRequests {
     return response;
   }
 
+  // Get Current Customer
+  Future<http.Response> getLoggedInCustomer() async {
+    http.Response response =
+        await _apiService.get('${ApiConstants.customersEndpoint}/get/');
+    return response;
+  }
+
   // Create Appointment
   Future<http.Response> createAppointment(
-      int bookingStart, int bookingEnd, int barberId) async {
+      int bookingStart, int bookingEnd, int barberId, int serviceId) async {
     final payload = {
       'bookingStart': bookingStart,
       'bookingEnd': bookingEnd,
-      'barberId': barberId
+      'barberId': barberId,
+      'servicesIds': [serviceId.toString()]
     };
+
+    print("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
     final jsonPayload = jsonEncode(payload);
     http.Response response = await _apiService.post(
         '${ApiConstants.appointmentEndpoint}/save', jsonPayload);
     return response;
   }
+
+  // upload user image
+  Future<http.Response> uploadImage(File file) async {
+    http.Response response = await _apiService.postImg(
+        '${ApiConstants.usersEndpoint}/image/save', file);
+    return response;
+  }
+
+  // get Appointments
+  Future<http.Response> getAppointments(String status) async {
+    Customer customer = Customer();
+    final customerId = await customer.retrieveCustomerId();
+    print("Customer Id: ${customerId.toString()}");
+    http.Response response = await _apiService.get(
+        '${ApiConstants.appointmentEndpoint}/get/barber/${customerId.toString()}?status=$status');
+    return response;
+  }
+
+  Future<String> retrieveImageUrl() async {
+    Customer customer = Customer();
+    final userId = await customer.retrieveUserId();
+    return '${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}/$userId/get-image';
+    // .toString();
+  }
+
+  String retrieveImageUrlFromUserId(int userId) {
+    return '${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}/$userId/get-image';
+    // .toString();
+  }
+
+  Future<http.Response> getNearestBarber(
+      double latitude, double longitude) async {
+    print('API REQUEST: $latitude');
+
+    return await _apiService.get(
+        '${ApiConstants.barbersEndpoint}/get/nearest?latitude=${latitude.toDouble()}&longitude=${longitude.toDouble()}');
+  }
+
+  Future<http.Response> getBarber(int barberId) async {
+    return await _apiService
+        .get('${ApiConstants.barbersEndpoint}/get/$barberId');
+  }
+
+  // Future<http.Response> updatePassword(String currentPassword,
+  //     String newPassword, String confirmPassword) async {
+  //   String? email = await Customer().retrieveCustomerEmail();
+  //   final payload = {
+  //     'email': email!,
+  //     'currentPassword': currentPassword,
+  //     'newPassword': newPassword,
+  //     'confirmNewPassword': confirmPassword
+  //   };
+  //   final jsonPayload = jsonEncode(payload);
+  //   return await _apiService.put(
+  //       '${ApiConstants.usersEndpoint}/update-password', jsonPayload);
+  // }
+
+  // Future<http.Response> forgotPassword(String email) async {
+  //   final payload = {'email': email};
+  //   final jsonPayload = jsonEncode(payload);
+  //   return await _apiService.post(
+  //       '${ApiConstants.authEndpoint}/forgot-password?email=$email',
+  //       jsonPayload);
+  // }
+
+  // Future<http.Response> forgotChangePassword(String email, String newPassword,
+  //     String confirmPassword, String otp) async {
+  //   final payload = {
+  //     'email': email,
+  //     'newPassword': newPassword,
+  //     'confirmNewPassword': confirmPassword,
+  //     'otp': otp
+  //   };
+  //   final jsonPayload = jsonEncode(payload);
+  //   return await _apiService.put(
+  //       '${ApiConstants.authEndpoint}/confirm-forgot-password', jsonPayload);
+  // }
+
+  
 }
