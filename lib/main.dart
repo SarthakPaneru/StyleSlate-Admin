@@ -33,7 +33,7 @@ class Mainpage extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: Image.asset(
-                    '/home/prajwal/Documents/bar/barberside/barberside/lib/assets/barberlogo.png'),
+                    'lib/assets/OIG2.jpeg',height: 170,width: 300,),
               ),
               const Text(
                 'कपाल काट्टने होईनत ?',

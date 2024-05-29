@@ -1,11 +1,11 @@
+import 'package:barberside/Screen/mainscreen.dart';
 import 'package:flutter/material.dart';
 import '/Screen/forgot_pwd.dart';
 import '/Screen/register.dart';
 import '/Widgets/appbar.dart';
 import '/Widgets/colors.dart';
-
 import 'package:email_validator/email_validator.dart';
-import 'appointment.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,8 +15,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordComtroller = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordComtroller = TextEditingController();
 
   @override
   void dispose() {
@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
-              return ScheduledAppointmentPage();
+              return const MainScreen();
             },
           ),
         );
@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.all(2),
                     height: 150,
                     width: 150,
-                    child: Image.asset('lib/assets/barberlogo.png'),
+                    child: Image.asset('lib/assets/OIG2.jpeg'),
                   ),
                   Text(
                     'Login',
