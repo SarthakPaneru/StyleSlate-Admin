@@ -1,17 +1,19 @@
+import 'package:barberside/Screen/mainscreen.dart';
+import 'package:flutter/material.dart';
+import '/Screen/forgot_pwd.dart';
+import '/Screen/register.dart';
+import '/Widgets/colors.dart';
+import 'package:email_validator/email_validator.dart';
+
 import 'dart:core';
 
 import 'package:barberside/Screen/profile/profile_menu.dart';
 import 'package:barberside/Screen/profile/profile_screen.dart';
-import 'package:barberside/Screen/register.dart';
-import 'package:email_validator/email_validator.dart';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-import '../Widgets/colors.dart';
 import '../auth/token.dart';
 import '../config/api_service.dart';
 import '../config/app_constants.dart';
@@ -106,7 +108,7 @@ class _LoginState extends State<Login> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return ScheduledAppointmentPage();
+                return const MainScreen();
               },
             ),
           );
@@ -117,7 +119,6 @@ class _LoginState extends State<Login> {
           print('Login failed with status code: ${response.statusCode}');
         }
       }
-      ;
     }
   }
 
