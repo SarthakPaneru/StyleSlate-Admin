@@ -1,15 +1,15 @@
-import 'package:barberside/Screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '/Widgets/colors.dart';
 import '/Screen/login.dart';
-import 'Screen/geolocation.dart';
+
 
 void main() {
-  runApp( MaterialApp(
+  runApp(const MaterialApp(
     home: Mainpage(),
   ));
 }
+
 
 class Mainpage extends StatelessWidget {
   const Mainpage({super.key});
@@ -35,7 +35,10 @@ class Mainpage extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.all(20),
                 child: Image.asset(
-                    'lib/assets/OIG2.jpeg',height: 170,width: 300,),
+                  'lib/assets/OIG2.jpeg',
+                  height: 170,
+                  width: 300,
+                ),
               ),
               const Text(
                 'कपाल काट्टने होईनत ?',

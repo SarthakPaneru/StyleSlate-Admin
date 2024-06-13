@@ -1,3 +1,6 @@
+import 'package:barberside/Screen/homepage.dart';
+import 'package:barberside/Screen/profile/profile.dart';
+import 'package:barberside/Screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'upcoming_appointments.dart';
 import 'completed_appointments.dart';
@@ -13,13 +16,15 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
+    const Homepage(),
     const UpcomingAppointments(),
     const CompletedAppointments(),
+    const ProfileScreen()
   ];
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int indexx) {
     setState(() {
-      _selectedIndex = index;
+      _selectedIndex = indexx;
     });
   }
 
@@ -40,6 +45,12 @@ class _MainScreenState extends State<MainScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
+              Icons.home,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
               Icons.schedule,
             ),
             label: 'Upcoming',
@@ -50,9 +61,15 @@ class _MainScreenState extends State<MainScreen> {
             ),
             label: 'Completed',
           ),
+           BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+            ),
+            label: 'Profile',
+          ),
         ],
-        currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
+        unselectedItemColor: const Color.fromARGB(255, 214, 133, 133),
         onTap: _onItemTapped,
       ),
     );

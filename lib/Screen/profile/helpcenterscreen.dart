@@ -1,3 +1,4 @@
+import 'package:barberside/chatbot/gemini_ai.dart';
 import 'package:flutter/material.dart';
 
 class HelpCenterScreen extends StatelessWidget {
@@ -17,14 +18,40 @@ class HelpCenterScreen extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          const ListTile(
-            title: Text('Contact Us',
-            style: TextStyle(color: Colors.orange),),
-            leading: Icon(Icons.email),
-          ),
+          // Modified ListTile with a Button
           ListTile(
-            title: const Text('FAQs',
-            style: TextStyle(color: Colors.orange),),
+            leading: const Icon(Icons.email),
+            title: Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      // Text color
+                      textStyle: const TextStyle(fontSize: 16.0),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const GeminiChatBot()),
+                      );
+                    },
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Contact Us'),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Remaining ListTiles
+          ListTile(
+            title: const Text(
+              'FAQs',
+              style: TextStyle(color: Colors.orange),
+            ),
             leading: const Icon(Icons.question_answer),
             onTap: () {
               // Handle "FAQs" tap
@@ -33,8 +60,10 @@ class HelpCenterScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Terms and Conditions',
-            style: TextStyle(color: Colors.orange),),
+            title: const Text(
+              'Terms and Conditions',
+              style: TextStyle(color: Colors.orange),
+            ),
             leading: const Icon(Icons.description),
             onTap: () {
               // Handle "Terms and Conditions" tap
@@ -42,8 +71,10 @@ class HelpCenterScreen extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Privacy Policy',
-            style: TextStyle(color: Colors.orange),),
+            title: const Text(
+              'Privacy Policy',
+              style: TextStyle(color: Colors.orange),
+            ),
             leading: const Icon(Icons.lock),
             onTap: () {
               // Handle "Privacy Policy" tap
