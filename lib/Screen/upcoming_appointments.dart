@@ -7,7 +7,7 @@ class UpcomingAppointments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10, 
+      itemCount: 2, 
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.symmetric(
