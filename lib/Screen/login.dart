@@ -1,4 +1,6 @@
 import 'package:barberside/Screen/mainscreen.dart';
+import 'package:barberside/auth/barber.dart';
+import 'package:barberside/config/api_requests.dart';
 import 'package:flutter/material.dart';
 import '/Screen/forgot_pwd.dart';
 import '/Screen/register.dart';
@@ -7,17 +9,13 @@ import 'package:email_validator/email_validator.dart';
 
 import 'dart:core';
 
-import 'package:barberside/Screen/profile/profile_menu.dart';
-import 'package:barberside/Screen/profile/profile_screen.dart';
 import 'dart:convert';
-
 
 import 'package:http/http.dart' as http;
 
 import '../auth/token.dart';
 import '../config/api_service.dart';
 import '../config/app_constants.dart';
-import 'appointment.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -50,6 +48,8 @@ class _LoginState extends State<Login> {
 
   final ApiService _apiService = ApiService();
   final Token _token = Token();
+  final ApiRequests _apiRequests = ApiRequests();
+  final Barber _barber = Barber();
 
   void _validateEmail() {
     String email = _emailController.text.trim();
@@ -68,7 +68,7 @@ class _LoginState extends State<Login> {
   bool _validatePasswordStrength(String password) {
     // Password validation logic goes here
     // Return true if password meets the criteria, otherwise false
-    return password.length >= 1 ||
+    return password.isNotEmpty ||
         password.contains(RegExp(r'[A-Z]')) ||
         password.contains(RegExp(r'[0-9]')) ||
         password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
@@ -91,7 +91,7 @@ class _LoginState extends State<Login> {
         final payload = {
           'email': email,
           'password': password,
-          'userRole': "BARBER"
+          'userRole': 'BARBER'
         };
         final jsonPayload = jsonEncode(payload);
 
@@ -102,20 +102,28 @@ class _LoginState extends State<Login> {
           // Successful login
           Map<String, dynamic> jsonResponse = jsonDecode(response.body);
           String token = jsonResponse['accessToken'];
-          print('Token: $token');
           await _token.storeBearerToken(token);
 
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return const MainScreen();
-              },
-            ),
-          );
+          http.Response response1 = await _apiRequests.getLoggedInBarber();
+
+          Map<String, dynamic> jsonResponse1 = jsonDecode(response1.body);
+
+          _barber.storeBarberDetails(jsonResponse1);
+
+          try {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return const MainScreen();
+                },
+              ),
+            );
+          } catch (e) {
+            print('Error Navigating: $e');
+          }
         } else {
           // Handle login failure
           _showSnackbar('Login failed. Please check your credentials.');
-
           print('Login failed with status code: ${response.statusCode}');
         }
       }
@@ -148,7 +156,7 @@ class _LoginState extends State<Login> {
                         padding: const EdgeInsets.all(2),
                         height: 150,
                         width: 150,
-                        child: Image.asset('lib/assets/barberlogo.png'),
+                        child: Image.asset('lib/assets/images/barberlogo.png'),
                       ),
                       Text(
                         'Login',
@@ -178,7 +186,7 @@ class _LoginState extends State<Login> {
                           filled: true,
                           hintStyle: TextStyle(color: Colors.grey[500]),
                           labelText: 'Email',
-                          prefixIcon: Icon(Icons.mail),
+                          prefixIcon: const Icon(Icons.mail),
                           helperText: isEmailValid ? null : 'Invalid email',
                           helperStyle: TextStyle(
                             color: isEmailValid ? Colors.grey[500] : Colors.red,
@@ -205,7 +213,7 @@ class _LoginState extends State<Login> {
                           filled: true,
                           hintStyle: TextStyle(color: Colors.grey[500]),
                           labelText: 'Password',
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock),
                           helperText: isPasswordValid
                               ? 'Password must contain at least 8 characters, a capital letter, a number, and a special character.'
                               : 'Invalid password',
@@ -259,6 +267,13 @@ class _LoginState extends State<Login> {
                       ElevatedButton(
                         onPressed: () {
                           // Handle forgot password logic or navigation here
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return const Forgetpassword();
+                              },
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,

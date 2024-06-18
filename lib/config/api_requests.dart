@@ -14,9 +14,23 @@ class ApiRequests {
   final ApiService _apiService = ApiService();
 
   // Get Email of currently logged in user
-  Future<http.Response> getLoggedInUser() async {
+  Future<http.Response> getLoggedInUserEmail() async {
     http.Response response = await _apiService
-        .get('${ApiConstants.customersEndpoint}/get-logged-in-user');
+        .get('${ApiConstants.usersEndpoint}/get-logged-in-user');
+    print('Logged in users status ${response.statusCode}');
+    if (response.statusCode == 200) {
+      // Successful login
+      return response;
+    } else {
+      print('Login failed with status code: ${response.statusCode}');
+      throw Future.error(
+          'Login failed with status code: ${response.statusCode}');
+    }
+  }
+
+  Future<http.Response> getLoggedInBarber() async {
+    http.Response response = await _apiService
+        .get('${ApiConstants.barbersEndpoint}/get-logged-in-user');
     print('Logged in users stattus ${response.statusCode}');
     if (response.statusCode == 200) {
       // Successful login
@@ -50,13 +64,6 @@ class ApiRequests {
   Future<http.Response> getBarbers() async {
     http.Response response =
         await _apiService.get('${ApiConstants.barbersEndpoint}/get-all');
-    return response;
-  }
-
-  // Get Current Customer
-  Future<http.Response> getLoggedInCustomer() async {
-    http.Response response =
-        await _apiService.get('${ApiConstants.customersEndpoint}/get/');
     return response;
   }
 
@@ -154,5 +161,9 @@ class ApiRequests {
   //       '${ApiConstants.authEndpoint}/confirm-forgot-password', jsonPayload);
   // }
 
-  
+  Future<http.Response> getBarberAppointment(
+      int barberId, String status) async {
+    return await _apiService.get(
+        '${ApiConstants.appointmentEndpoint}/get/barber/$barberId?status=$status');
+  }
 }
