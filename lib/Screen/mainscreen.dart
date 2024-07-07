@@ -2,6 +2,7 @@
 
 import 'package:barberside/Screen/homepage.dart';
 import 'package:barberside/Screen/profile/profile_screen.dart';
+import 'package:barberside/Screen/socket/user_search.dart';
 import 'package:barberside/auth/barber.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    getCustomerId();
+    getBarberId();
   }
 
-  void getCustomerId() async {
+  void getBarberId() async {
     String tempid = (await barber.retrieveBarberId())!;
     setState(() {
       barberId = int.parse(tempid);
@@ -67,7 +68,15 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       extendBody: true,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return ChatPage(barberId!);
+                },
+              ),
+            );
+        },
         child: const Icon(Icons.add),
         backgroundColor: Colors.amber,
       ),

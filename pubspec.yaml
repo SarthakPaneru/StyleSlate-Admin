@@ -52,7 +52,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   flutter_gemini: ^2.0.4
   google_generative_ai: ^0.4.3
-  web_socket_channel: ^3.0.0
+  stomp_dart_client: ^2.0.0
   shared_preferences: ^2.2.3
   fl_chart: ^0.68.0
   
