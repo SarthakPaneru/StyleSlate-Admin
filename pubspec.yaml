@@ -37,12 +37,25 @@ dependencies:
   cupertino_icons: ^1.0.2
   email_validator: ^2.1.17
   google_nav_bar: ^5.0.6
-  flutter_svg: ^0.22.0 
   http: ^1.1.0
-  flutter_secure_storage: ^8.0.0
+  flutter_secure_storage: ^9.2.2
   heart_toggle: ^0.0.3
   table_calendar: ^3.0.9
   font_awesome_flutter: ^10.2.1
+  geolocator: ^12.0.0
+  image_picker: ^1.0.1
+  mime: ^1.0.4
+  http_parser: ^4.0.2
+  google_maps_flutter: ^2.5.0
+  cached_network_image: ^3.3.0
+  intl: ^0.19.0
+  flutter_svg: ^2.0.10+1
+  flutter_gemini: ^2.0.4
+  google_generative_ai: ^0.4.3
+  stomp_dart_client: ^2.0.0
+  shared_preferences: ^2.2.3
+  fl_chart: ^0.68.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +66,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -68,8 +81,20 @@ flutter:
 
   #To add assets to your application, add an assets section, like this:
   assets:
-    - lib/assets/barberlogo.png
-    - lib/assets/stylist2.png
+# <<<<<<< HEAD
+#     - lib/assets/barberlogo.png
+#     - lib/assets/stylist2.png
+#     - lib/assets/OIG2.jpeg
+    
+# =======
+    - lib/assets/
+    - lib/assets/icons/haircut.svg
+    - lib/assets/icons/beard.svg
+    - lib/assets/icons/facial.svg
+    - lib/assets/icons/massage.svg
+
+
+# >>>>>>> 2f1bf2faab48b13bd13f8e74d2ec4bb7df0b6dc2
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
