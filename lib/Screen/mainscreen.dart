@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:barberside/Screen/homepage.dart';
 import 'package:barberside/Screen/profile/profile_screen.dart';
 import 'package:barberside/auth/barber.dart';
@@ -43,9 +45,11 @@ class _MainScreenState extends State<MainScreen> {
     }
     print(barberId);
     return <Widget>[
-      const Homepage(),
+      Homepage(id: barberId!),
       UpcomingAppointments(id: barberId!),
-      CompletedAppointments(id: barberId!,),
+      CompletedAppointments(
+        id: barberId!,
+      ),
       const ProfileScreen()
     ];
   }
@@ -59,26 +63,26 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 153, 210, 236),
-        title: const Text('Booking Details'),
-      ),
       body: Center(
         child: _widgetOptions().elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.schedule),
+            icon: Icon(Icons.watch_later),
             label: 'Upcoming',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.done),
+            icon: Icon(
+              Icons.done,
+              size: 35,
+            ),
             label: 'Completed',
           ),
           BottomNavigationBarItem(
@@ -87,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.red,
         unselectedItemColor: const Color.fromARGB(255, 214, 133, 133),
         onTap: _onItemTapped,
       ),

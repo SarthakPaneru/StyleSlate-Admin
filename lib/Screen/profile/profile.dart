@@ -3,16 +3,18 @@ import 'dart:io';
 import 'package:barberside/config/api_requests.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  ApiRequests _apiRequests = ApiRequests();
+  final ApiRequests _apiRequests = ApiRequests();
   File? _image;
 
   Future getImage() async {
@@ -25,29 +27,30 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      width: 300,
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                  radius: 80,
-                  child: CachedNetworkImage(
-                    imageUrl:
-                        '${_apiRequests.retrieveImageUrl()}',
-                    placeholder: (context, url) => const Icon(
-                      Icons.person,
-                      size: 80,
-                    ),
-                  )),
-              ElevatedButton(
-                onPressed: getImage,
-                child: const Text('Edit Profile Picture'),
-              ),
-            ],
+    return SafeArea(
+      child: SizedBox(
+        height: 200,
+        width: 200,
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                    radius: 70,
+                    child: CachedNetworkImage(
+                      imageUrl: '${_apiRequests.retrieveImageUrl()}',
+                      placeholder: (context, url) => const Icon(
+                        Icons.person,
+                        size: 80,
+                      ),
+                    )),
+                ElevatedButton(
+                  onPressed: getImage,
+                  child: const Text('Edit Profile Picture'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

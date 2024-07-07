@@ -1,9 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
-
-import 'package:flutter/material.dart';
-
 import '../auth/customer.dart';
 import 'api_service.dart';
 import 'package:http/http.dart' as http;

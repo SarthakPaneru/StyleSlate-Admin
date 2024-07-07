@@ -7,7 +7,7 @@ class BookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 8, 
+      itemCount: 1,
       itemBuilder: (context, index) {
         return Card(
           margin: const EdgeInsets.symmetric(
@@ -51,7 +51,8 @@ class BookingCard extends StatelessWidget {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Confirm Appointment'),
-                          content: const Text('Do you want to accept this appointment?'),
+                          content: const Text(
+                              'Do you want to accept this appointment?'),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
@@ -76,7 +77,10 @@ class BookingCard extends StatelessWidget {
                   },
                   mini: true, // Use a smaller FAB
                   backgroundColor: Colors.green,
-                  child: const Icon(Icons.check,size: 20,),
+                  child: const Icon(
+                    Icons.check,
+                    size: 20,
+                  ),
                 ),
               ],
             ),

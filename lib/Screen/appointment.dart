@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -8,22 +10,24 @@ import 'package:intl/intl.dart';
 import '../config/api_requests.dart';
 
 class ScheduledAppointmentPage extends StatefulWidget {
+  const ScheduledAppointmentPage({super.key});
+
   @override
-  _ScheduledAppointmentPageState createState() =>
+  State<ScheduledAppointmentPage> createState() =>
       _ScheduledAppointmentPageState();
 }
 
 class _ScheduledAppointmentPageState extends State<ScheduledAppointmentPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  ApiRequests _apiRequests = ApiRequests();
+  final ApiRequests _apiRequests = ApiRequests();
   bool isCompleted = false;
-  List<String> _barberNames = List.empty(growable: true);
-  List<int> _userIds = List.empty(growable: true);
-  List<String> _imageUrls = List.empty(growable: true);
-  List<String> _dates = List.empty(growable: true);
-  List<String> _times = List.empty(growable: true);
-  List<String> _serviceNames = List.empty(growable: true);
+  final List<String> _barberNames = List.empty(growable: true);
+  final List<int> _userIds = List.empty(growable: true);
+  final List<String> _imageUrls = List.empty(growable: true);
+  final List<String> _dates = List.empty(growable: true);
+  final List<String> _times = List.empty(growable: true);
+  final List<String> _serviceNames = List.empty(growable: true);
   int _lengthOfResponse = 0;
   bool isLoading = true;
 
@@ -71,7 +75,7 @@ class _ScheduledAppointmentPageState extends State<ScheduledAppointmentPage>
     final DateTime dateTime =
         DateTime.fromMillisecondsSinceEpoch(bookingStart * 1000);
     print('DateTime: ${dateTime.toLocal()}');
-    print('DateTime: ${dateTime}');
+    print('DateTime: $dateTime');
 
     final date = DateFormat('yyyy-MM-dd').format(dateTime);
     _dates.add(date);
@@ -167,16 +171,16 @@ class _ScheduledAppointmentPageState extends State<ScheduledAppointmentPage>
                     padding: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 16.0),
                     child: Card(
-                      color: Color(0xff323345),
+                      color: const Color(0xff323345),
                       elevation: 2.0,
                       child: ListTile(
                         leading: CircleAvatar(
-                          child: 
-                          CachedNetworkImage(imageUrl: _imageUrls[index]),
+                          child:
+                              CachedNetworkImage(imageUrl: _imageUrls[index]),
                         ),
                         title: Text(
                           _barberNames[index],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -185,17 +189,18 @@ class _ScheduledAppointmentPageState extends State<ScheduledAppointmentPage>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Date: ${_dates[index]}',
-                                style: TextStyle(color: Colors.white70)),
+                                style: const TextStyle(color: Colors.white70)),
                             Text('Time: ${_times[index]}',
-                                style: TextStyle(color: Colors.white70)),
+                                style: const TextStyle(color: Colors.white70)),
                             Text('Service: ${_serviceNames[index]}',
-                                style: TextStyle(color: Colors.white70)),
+                                style: const TextStyle(color: Colors.white70)),
                           ],
                         ),
                         trailing: isCompleted
-                            ? Icon(Icons.check_circle, color: Colors.green)
+                            ? const Icon(Icons.check_circle,
+                                color: Colors.green)
                             : IconButton(
-                                icon: Icon(Icons.cancel),
+                                icon: const Icon(Icons.cancel),
                                 color: Colors.red,
                                 onPressed: () {
                                   // Cancel appointment logic here

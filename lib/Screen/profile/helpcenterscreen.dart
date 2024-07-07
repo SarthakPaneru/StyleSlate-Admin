@@ -1,4 +1,3 @@
-import 'package:barberside/chatbot/gemini_ai.dart';
 import 'package:flutter/material.dart';
 
 class HelpCenterScreen extends StatelessWidget {
@@ -30,13 +29,7 @@ class HelpCenterScreen extends StatelessWidget {
                       // Text color
                       textStyle: const TextStyle(fontSize: 16.0),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const GeminiChatBot()),
-                      );
-                    },
+                    onPressed: () {},
                     child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Text('Contact Us'),
