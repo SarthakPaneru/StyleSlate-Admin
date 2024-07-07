@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class BarberAppointmentDto {
   final int id;
   final int barberId;
@@ -9,7 +7,14 @@ class BarberAppointmentDto {
   final int bookingStart;
   final int bookingEnd;
 
-  BarberAppointmentDto({required this.id, required this.barberId, required this.customerId, required this.serviceName, required this.status, required this.bookingStart, required this.bookingEnd});
+  BarberAppointmentDto(
+      {required this.id,
+      required this.barberId,
+      required this.customerId,
+      required this.serviceName,
+      required this.status,
+      required this.bookingStart,
+      required this.bookingEnd});
 
   BarberAppointmentDto.fromMap(Map map)
       : this(
@@ -19,8 +24,7 @@ class BarberAppointmentDto {
             serviceName: map['serviceName'],
             status: map['status'],
             bookingStart: map['bookingStart'],
-            bookingEnd: map['bookingEnd']
-            );
+            bookingEnd: map['bookingEnd']);
 
   Map<String, dynamic> asMap() => {
         'id': id,

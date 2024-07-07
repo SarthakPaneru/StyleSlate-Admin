@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
-
 import '../auth/customer.dart';
 import 'api_service.dart';
 import 'app_constants.dart';

@@ -54,6 +54,7 @@ dependencies:
   google_generative_ai: ^0.4.3
   web_socket_channel: ^3.0.0
   shared_preferences: ^2.2.3
+  fl_chart: ^0.68.0
   
 
 dev_dependencies:

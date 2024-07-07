@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 import '../../config/api_service.dart';
 import '../../config/app_constants.dart';
 
@@ -9,7 +7,7 @@ class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
 
   @override
-  _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
@@ -37,7 +35,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   void _changePassword() {
     final response = _apiService.get('${ApiConstants.usersEndpoint}/get-all');
-    
+
     String currentPassword = _currentPasswordController.text;
     String newPassword = _newPasswordController.text;
     String confirmPassword = _confirmPasswordController.text;
@@ -194,7 +192,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             const SizedBox(height: 30.0),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
               ),
               onPressed: _changePassword,
               child: const Text(

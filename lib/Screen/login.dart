@@ -16,7 +16,7 @@ import '../config/api_service.dart';
 import '../config/app_constants.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();

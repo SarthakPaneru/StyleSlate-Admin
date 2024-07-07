@@ -1,4 +1,7 @@
 import 'package:barberside/Screen/splash_screen.dart';
+// ignore_for_file: avoid_print
+
+import 'package:barberside/Screen/mainscreen.dart';
 import 'package:barberside/config/api_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +26,6 @@ class _MainpageState extends State<Mainpage> {
   final ApiRequests _apiRequests = ApiRequests();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isTokenValid();
   }
