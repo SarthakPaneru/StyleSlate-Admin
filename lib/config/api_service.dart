@@ -46,9 +46,8 @@ class ApiService {
       ApiConstants apiConstants = ApiConstants();
       Map<String, String> headers = await apiConstants.postHeaders();
 
-
-      http.Response response = await http.post(uri,
-          headers: headers, body: bodyString);
+      http.Response response =
+          await http.post(uri, headers: headers, body: bodyString);
       print('Main http: ${response.body}');
       return response;
     } catch (e) {
@@ -65,8 +64,8 @@ class ApiService {
       ApiConstants apiConstants = ApiConstants();
       Map<String, String> headers = await apiConstants.postHeaders();
 
-      http.Response response = await http.put(uri,
-          headers: headers, body: bodyString);
+      http.Response response =
+          await http.put(uri, headers: headers, body: bodyString);
       return response;
     } catch (e) {
       return http.Response({"message": e}.toString(), 400);
@@ -80,8 +79,7 @@ class ApiService {
       ApiConstants apiConstants = ApiConstants();
       Map<String, String> headers = await apiConstants.postHeaders();
 
-      http.Response response =
-          await http.delete(uri, headers: headers);
+      http.Response response = await http.delete(uri, headers: headers);
       return response;
     } catch (e) {
       return http.Response({"message": e}.toString(), 400);
@@ -125,6 +123,5 @@ class ApiService {
 
   Future<Uri> fetchProtectedImage(String imageUrl) async {
     return Uri.parse(imageUrl);
-       
   }
 }

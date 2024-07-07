@@ -1,15 +1,13 @@
-import 'package:barberside/Screen/mainscreen.dart';
+import 'package:barberside/Screen/splash_screen.dart';
 import 'package:barberside/config/api_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import '/Widgets/colors.dart';
-import '/Screen/login.dart';
 
 void main() {
-  runApp(const MaterialApp(
-    home: Mainpage(),
-  ));
+  runApp(
+    const Mainpage(),
+  );
 }
 
 class Mainpage extends StatefulWidget {
@@ -47,56 +45,9 @@ class _MainpageState extends State<Mainpage> {
       const SystemUiOverlayStyle(statusBarColor: Colors.black),
     );
     return MaterialApp(
+      theme: ThemeData.light(useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome'),
-          centerTitle: true,
-          backgroundColor: PrimaryColors.primarybrown,
-        ),
-        body: Container(
-          margin: const EdgeInsets.only(left: 25, right: 25),
-          child: Column(
-            children: [
-              const SizedBox(height: 75),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: Image.asset(
-                  'lib/assets/OIG2.jpeg',
-                  height: 170,
-                  width: 300,
-                ),
-              ),
-              const Text(
-                'कपाल काट्टने होईनत ?',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 45),
-              FloatingActionButton(
-                foregroundColor: Colors.white,
-                backgroundColor: PrimaryColors.primarybrown,
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      if (isLoggedIn) {
-                        return const MainScreen();
-                      }
-                      return const Login();
-                    },
-                  ));
-                },
-                child: const Icon(Icons.arrow_forward_outlined, size: 28),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "Let's Explore",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      ),
+      home: SplashScreen(),
     );
   }
 }

@@ -2,8 +2,9 @@ import 'package:barberside/Screen/homepage.dart';
 import 'package:barberside/Screen/profile/profile_screen.dart';
 import 'package:barberside/auth/barber.dart';
 import 'package:flutter/material.dart';
-import 'upcoming_appointments.dart';
+
 import 'completed_appointments.dart';
+import 'upcoming_appointments.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -45,7 +46,9 @@ class _MainScreenState extends State<MainScreen> {
     return <Widget>[
       const Homepage(),
       UpcomingAppointments(id: barberId!),
-      CompletedAppointments(id: barberId!,),
+      CompletedAppointments(
+        id: barberId!,
+      ),
       const ProfileScreen()
     ];
   }
@@ -59,6 +62,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      extendBody: true,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.amber,
+      ),
       backgroundColor: Colors.brown,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 153, 210, 236),
@@ -68,6 +78,10 @@ class _MainScreenState extends State<MainScreen> {
         child: _widgetOptions().elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        unselectedItemColor: const Color.fromARGB(255, 214, 133, 133),
+        onTap: _onItemTapped,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -86,10 +100,6 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: const Color.fromARGB(255, 214, 133, 133),
-        onTap: _onItemTapped,
       ),
     );
   }

@@ -33,9 +33,7 @@ class _HomepageState extends State<Homepage> {
           const SizedBox(height: 20),
           const SizedBox(
             height: 200, // Adjust this height based on your requirement
-            child: BookingCard(
-              
-            ),
+            child: BookingCard(),
           ),
         ],
       ),

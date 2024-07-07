@@ -1,18 +1,16 @@
+import 'dart:convert';
+import 'dart:core';
+
 import 'package:barberside/Screen/mainscreen.dart';
 import 'package:barberside/auth/barber.dart';
 import 'package:barberside/config/api_requests.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import '/Screen/forgot_pwd.dart';
 import '/Screen/register.dart';
 import '/Widgets/colors.dart';
-import 'package:email_validator/email_validator.dart';
-
-import 'dart:core';
-
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-
 import '../auth/token.dart';
 import '../config/api_service.dart';
 import '../config/app_constants.dart';
@@ -102,8 +100,9 @@ class _LoginState extends State<Login> {
           // Successful login
           Map<String, dynamic> jsonResponse = jsonDecode(response.body);
           String token = jsonResponse['accessToken'];
+          //store the token
           await _token.storeBearerToken(token);
-
+//retrive and store the
           http.Response response1 = await _apiRequests.getLoggedInBarber();
 
           Map<String, dynamic> jsonResponse1 = jsonDecode(response1.body);

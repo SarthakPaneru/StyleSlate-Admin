@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:barberside/config/api_requests.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -36,8 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
               CircleAvatar(
                   radius: 80,
                   child: CachedNetworkImage(
-                    imageUrl:
-                        '${_apiRequests.retrieveImageUrl()}',
+                    imageUrl: '${_apiRequests.retrieveImageUrl()}',
                     placeholder: (context, url) => const Icon(
                       Icons.person,
                       size: 80,
@@ -46,6 +44,10 @@ class _ProfilePageState extends State<ProfilePage> {
               ElevatedButton(
                 onPressed: getImage,
                 child: const Text('Edit Profile Picture'),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Update Location'),
               ),
             ],
           ),

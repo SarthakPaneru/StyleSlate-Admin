@@ -1,13 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../auth/customer.dart';
 import 'api_service.dart';
-import 'package:http/http.dart' as http;
-
 import 'app_constants.dart';
 
 class ApiRequests {
@@ -98,6 +95,25 @@ class ApiRequests {
     print("Customer Id: ${customerId.toString()}");
     http.Response response = await _apiService.get(
         '${ApiConstants.appointmentEndpoint}/get/barber/${customerId.toString()}?status=$status');
+    return response;
+  }
+
+  Future<http.Response> sendLocationData(
+      double latitude, double longitude) async {
+    final String url = 'https://your_api_endpoint';
+    final Map<String, dynamic> body = {
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+
+    http.Response response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(body),
+    );
+
     return response;
   }
 
