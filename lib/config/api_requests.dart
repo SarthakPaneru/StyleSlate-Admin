@@ -45,7 +45,8 @@ class ApiRequests {
       'password': password,
       'confirmPassword': confirmPassword,
       'firstName': firstName,
-      'lastName': lastName
+      'lastName': lastName,
+      'userRole': 'BARBER'
     };
     final jsonPayload = jsonEncode(payload);
 
