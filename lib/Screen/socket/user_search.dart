@@ -32,6 +32,7 @@ class _ChatPageState extends State<ChatPage> {
     // Initialize the StompClient
     stompClient = StompClient(
       config: StompConfig(
+
         url: 'ws://${ApiConstants.address}/ws', // Ensure this URL is correct
         onConnect: onConnect,
         beforeConnect: () async {
@@ -114,48 +115,66 @@ class _ChatPageState extends State<ChatPage> {
               itemCount: socketDtoList.length,
               itemBuilder: (context, index) {
                 final msg = socketDtoList[index];
-                return ListTile(
-                  title: Text('${msg.customerId}'),
-                  subtitle: Text('${msg.longitude} and ${msg.latitude}'),
-                  // trailing: msg.isme ? Icon(Icons.person) : null,
+                return Container(
+                  padding: EdgeInsets.all(16.0),
+                  margin: EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Do you accept the terms and conditions?',
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                      SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle accept action
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.green, // text color
+                            ),
+                            child: Text('Accept'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle decline action
+                            },
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.red, // text color
+                            ),
+                            child: Text('Decline'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
           ),
           if (connected)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: msgtext,
-                      decoration:
-                          const InputDecoration(labelText: 'Send a message'),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: () {
-                      if (msgtext.text.isNotEmpty) {
-                        print(msgtext.text);
-                        stompClient.send(
-                          destination: '/app/barber/${widget.id}',
-                          body: json
-                              .encode({'from': 'myid', 'text': msgtext.text}),
-                        );
-                        msgtext.clear();
-                      }
-                    },
-                  ),
-                ],
+            if (!connected)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Disconnected from WebSocket'),
               ),
-            ),
-          if (!connected)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Disconnected from WebSocket'),
-            ),
         ],
       ),
     );
