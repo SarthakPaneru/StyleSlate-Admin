@@ -70,12 +70,14 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return ChatPage(barberId!);
-                },
-              ),
-            );
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return ChatPage(
+                  barberId!,
+                );
+              },
+            ),
+          );
         },
         child: const Icon(Icons.add),
         backgroundColor: Colors.amber,
