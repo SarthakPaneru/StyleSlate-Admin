@@ -3,7 +3,8 @@ import '../auth/token.dart';
 class ApiConstants {
   static const int maxRetryCount = 3;
   static const int timeoutSeconds = 30;
-  static const String baseUrl = 'http://192.168.1.193:8080';
+  static const String address = '192.168.1.88:8080';
+  static const String baseUrl = 'http://$address';
 
   // Auth's Endpoint
   static const String authEndpoint = '/auth';

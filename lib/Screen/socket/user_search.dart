@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:barberside/Screen/socket/socket_dto.dart';
+import 'package:barberside/config/app_constants.dart';
 import 'package:flutter/material.dart';
 // import 'package:stomp_dart_client/stomp.dart';
 // import 'package:stomp_dart_client/stomp_config.dart';
@@ -31,7 +32,7 @@ class _ChatPageState extends State<ChatPage> {
     // Initialize the StompClient
     stompClient = StompClient(
       config: StompConfig(
-        url: 'ws://192.168.1.101:8080/ws', // Ensure this URL is correct
+        url: 'ws://${ApiConstants.address}/ws', // Ensure this URL is correct
         onConnect: onConnect,
         beforeConnect: () async {
           print('Waiting to connect...');
