@@ -55,6 +55,7 @@ dependencies:
   stomp_dart_client: ^2.0.0
   shared_preferences: ^2.2.3
   fl_chart: ^0.68.0
+  awesome_notifications: ^0.9.3+1
   
 
 dev_dependencies:

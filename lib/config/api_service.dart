@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:barberside/Screen/login.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
@@ -31,6 +33,10 @@ class ApiService {
       print('HERE ');
       print(response.body);
       processData(response.body);
+      if (response.statusCode==400 || response.statusCode==401) {
+        Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const Login()));
+      }
       return response;
     } catch (e) {
       return http.Response({"message": e}.toString(), 400);
