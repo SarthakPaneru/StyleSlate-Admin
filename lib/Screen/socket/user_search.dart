@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:barberside/Screen/socket/socket_dto.dart';
+import 'package:barberside/config/api_requests.dart';
 import 'package:barberside/config/app_constants.dart';
 import 'package:flutter/material.dart';
 // import 'package:stomp_dart_client/stomp.dart';
@@ -24,6 +25,7 @@ class _ChatPageState extends State<ChatPage> {
   List<SocketDto> socketDtoList = [];
   TextEditingController msgtext = TextEditingController();
   bool connected = false;
+  final ApiRequests _apiRequests = ApiRequests();
 
   @override
   void initState() {
@@ -32,7 +34,6 @@ class _ChatPageState extends State<ChatPage> {
     // Initialize the StompClient
     stompClient = StompClient(
       config: StompConfig(
-
         url: 'ws://${ApiConstants.address}/ws', // Ensure this URL is correct
         onConnect: onConnect,
         beforeConnect: () async {
@@ -81,6 +82,9 @@ class _ChatPageState extends State<ChatPage> {
             socketDto.customerId = result['customerId'];
             socketDto.latitude = result['latitude'];
             socketDto.longitude = result['longitude'];
+            socketDto.location = result['location'];
+            socketDto.serviceName = result['serviceName'];
+            socketDto.price = result['price'];
             socketDtoList.add(socketDto);
           });
         }
@@ -94,6 +98,10 @@ class _ChatPageState extends State<ChatPage> {
     //     body: json.encode({'from': 'myid', 'text': 'Hello!'}),
     //   );
     // });
+  }
+
+  void acceptRequest(int barberId, int customerId) {
+    // _apiRequests.createAppointment(bookingStart, bookingEnd, barberId, serviceId)
   }
 
   @override
@@ -134,7 +142,7 @@ class _ChatPageState extends State<ChatPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Do you accept the terms and conditions?',
+                        msg.serviceName.toString(),
                         style: TextStyle(fontSize: 18.0),
                       ),
                       SizedBox(height: 20.0),
