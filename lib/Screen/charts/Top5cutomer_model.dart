@@ -1,5 +1,3 @@
-
-
 class CustomerCategory {
   final int categoryCount;
   final String lastName;

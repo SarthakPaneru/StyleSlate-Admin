@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HelpCenterScreen extends StatelessWidget {
-  const HelpCenterScreen({super.key});
+  const HelpCenterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -9,72 +9,101 @@ class HelpCenterScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.0,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xff323345),
         title: const Text(
           'Help Center',
-          style: TextStyle(color: Colors.grey),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
-      body: ListView(
-        children: <Widget>[
-          // Modified ListTile with a Button
-          ListTile(
-            leading: const Icon(Icons.email),
-            title: Row(
-              children: [
-                Expanded(
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      // Text color
-                      textStyle: const TextStyle(fontSize: 16.0),
-                    ),
-                    onPressed: () {},
-                    child: const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Contact Us'),
-                    ),
+      backgroundColor: const Color(0xff323345),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              'How can we help you?',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: <Widget>[
+                  _buildCard(
+                    icon: Icons.email,
+                    title: 'Contact Us',
+                    onTap: () {
+                      // Handle Contact Us tap
+                    },
                   ),
+                  _buildCard(
+                    icon: Icons.question_answer,
+                    title: 'FAQs',
+                    onTap: () {
+                      // Handle FAQs tap
+                    },
+                  ),
+                  _buildCard(
+                    icon: Icons.description,
+                    title: 'Terms and Conditions',
+                    onTap: () {
+                      // Handle Terms and Conditions tap
+                    },
+                  ),
+                  _buildCard(
+                    icon: Icons.lock,
+                    title: 'Privacy Policy',
+                    onTap: () {
+                      // Handle Privacy Policy tap
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      color: const Color(0xff3E3F54),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 48, color: Colors.white),
+              const SizedBox(height: 12),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          // Remaining ListTiles
-          ListTile(
-            title: const Text(
-              'FAQs',
-              style: TextStyle(color: Colors.orange),
-            ),
-            leading: const Icon(Icons.question_answer),
-            onTap: () {
-              // Handle "FAQs" tap
-              // You can navigate to a list of frequently asked questions
-              // or show the answers directly in the app
-            },
-          ),
-          ListTile(
-            title: const Text(
-              'Terms and Conditions',
-              style: TextStyle(color: Colors.orange),
-            ),
-            leading: const Icon(Icons.description),
-            onTap: () {
-              // Handle "Terms and Conditions" tap
-              // You can navigate to a screen displaying the terms and conditions
-            },
-          ),
-          ListTile(
-            title: const Text(
-              'Privacy Policy',
-              style: TextStyle(color: Colors.orange),
-            ),
-            leading: const Icon(Icons.lock),
-            onTap: () {
-              // Handle "Privacy Policy" tap
-              // You can navigate to a screen displaying the privacy policy
-            },
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -1,113 +1,161 @@
 import 'package:barberside/Screen/login.dart';
+import 'package:barberside/Screen/profile/changepassword.dart';
 import 'package:barberside/auth/token.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'Myaccount.dart';
-import 'changepassword.dart';
 import 'helpcenterscreen.dart';
 import 'profile.dart';
-import 'profile_menu.dart';
 
 class Body extends StatelessWidget {
-  const Body({super.key});
+  const Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        children: [
-          ProfilePage(),
-          const SizedBox(height: 20),
-          ProfileMenu(
-            text: "My Account",
-            icon: "lib/assets/User Icon.svg",
-            press: () => {navigateTOMyaccount(context)},
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xff323345),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color(0xff323345),
+            const Color(0xff323345).withOpacity(0.8),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          child: Column(
+            children: [
+              const ProfilePage(),
+              const SizedBox(height: 20),
+              _buildProfileMenu(
+                context,
+                "My Account",
+                "lib/assets/images/User Icon.svg",
+                () => navigateTo(context, const MyAccountScreen()),
+              ),
+              _buildProfileMenu(
+                context,
+                "Notifications",
+                "lib/assets/images/Bell.svg",
+                () {},
+              ),
+              _buildProfileMenu(
+                context,
+                "Settings",
+                "lib/assets/images/Settings.svg",
+                () => navigateTo(context, const ChangePasswordScreen()),
+              ),
+              _buildProfileMenu(
+                context,
+                "Help Center",
+                "lib/assets/images/Question mark.svg",
+                () => navigateTo(context, const HelpCenterScreen()),
+              ),
+              _buildProfileMenu(
+                context,
+                "Log Out",
+                "lib/assets/images/Log out.svg",
+                () => _showLogoutDialog(context),
+                isLogout: true,
+              ),
+            ],
           ),
-          ProfileMenu(
-            text: "Notifications",
-            icon: "lib/assets/Bell.svg",
-            press: () {},
-          ),
-          ProfileMenu(
-            text: "Settings",
-            icon: "lib/assets/Settings.svg",
-            press: () => {navigateTOChangePassword(context)},
-          ),
-          ProfileMenu(
-            text: "Help Center",
-            icon: "lib/assets/Question mark.svg",
-            press: () => {navigateTOHelpcenter(context)},
-          ),
-          ProfileMenu(
-            text: "Log Out",
-            icon: "lib/assets/Log out.svg",
-            press: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    content: const Text('Are you sure.'),
-                    actions: <Widget>[
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                        ),
-                        child: const Text(
-                          'Yes',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        onPressed: () async {
-                          // Perform logout action
-                          await _logout(context);
-                        },
-                      ),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                        ),
-                        child: const Text(
-                          'NO',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  void navigateTOChangePassword(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const ChangePasswordScreen()));
+  Widget _buildProfileMenu(
+      BuildContext context, String text, String icon, VoidCallback press,
+      {bool isLogout = false}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: isLogout
+            ? Colors.red.withOpacity(0.1)
+            : Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: ListTile(
+        leading: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: isLogout
+                ? Colors.red.withOpacity(0.1)
+                : const Color(0xFFF5F6F9),
+            shape: BoxShape.circle,
+          ),
+          child: SvgPicture.asset(
+            icon,
+            color: isLogout ? Colors.red : const Color(0xFF323345),
+            width: 18,
+          ),
+        ),
+        title: Text(
+          text,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: isLogout ? Colors.red : Colors.white,
+          ),
+        ),
+        trailing: Icon(
+          Icons.arrow_forward_ios,
+          color: isLogout ? Colors.red : Colors.white,
+          size: 18,
+        ),
+        onTap: press,
+      ),
+    );
   }
 
-  void navigateTOHelpcenter(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const HelpCenterScreen()));
+  void navigateTo(BuildContext context, Widget screen) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
   }
 
-  void navigateTOMyaccount(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const MyAccountScreen()));
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color(0xff323345),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: const Text('Logout', style: TextStyle(color: Colors.white)),
+          content: const Text('Are you sure you want to log out?',
+              style: TextStyle(color: Colors.white70)),
+          actions: <Widget>[
+            TextButton(
+              child:
+                  const Text('Cancel', style: TextStyle(color: Colors.white70)),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+              child:
+                  const Text('Logout', style: TextStyle(color: Colors.white)),
+              onPressed: () async {
+                await _logout(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _logout(BuildContext context) async {
-    // Clear the stored token
     Token _token = Token();
     await _token.clearBearerToken();
-
-    // Navigate to the Login screen
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const Login()),
       (Route<dynamic> route) => false,
