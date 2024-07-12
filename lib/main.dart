@@ -1,17 +1,9 @@
-import 'dart:isolate';
-import 'dart:ui';
-
 import 'package:barberside/Notification/notification.dart';
 import 'package:barberside/Notification/notification_controller.dart';
 import 'package:barberside/Screen/splash_screen.dart';
-// ignore_for_file: avoid_print
-
-import 'package:barberside/config/api_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:awesome_notifications/awesome_notifications.dart';
-
 
 Future<void> main() async {
   // Always initialize Awesome Notifications
@@ -25,14 +17,14 @@ Future<void> main() async {
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});
 
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   State<Mainpage> createState() => _MainpageState();
 }
 
 class _MainpageState extends State<Mainpage> {
-  
   static const String routeHome = '/', routeNotification = '/notification-page';
 
   @override
@@ -46,7 +38,7 @@ class _MainpageState extends State<Mainpage> {
     pageStack.add(MaterialPageRoute(
         builder: (_) =>
             NotificationPage(title: 'Awesome Notifications Example App')));
-            // const NotificationPage(receivedAction: initialRouteName,)));
+    // const NotificationPage(receivedAction: initialRouteName,)));
     if (initialRouteName == routeNotification &&
         NotificationController.initialAction != null) {
       pageStack.add(MaterialPageRoute(
@@ -80,12 +72,10 @@ class _MainpageState extends State<Mainpage> {
       theme: ThemeData.light(useMaterial3: true),
       debugShowCheckedModeBanner: false,
       navigatorKey: Mainpage.navigatorKey,
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
-
-
 
 Future<void> myNotifyScheduleInHours({
   required int hoursFromNow,

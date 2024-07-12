@@ -1,3 +1,4 @@
+import 'package:barberside/Screen/allservice/allservices_screen.dart';
 import 'package:barberside/auth/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,13 +13,39 @@ class CategorySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 20),
-          child: Text(
-            'Category',
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
-          ),
+        Row(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Text(
+                'Category',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+            const SizedBox(
+              width: 180,
+            ),
+            SizedBox(
+              width: 125,
+              height: 40,
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Screen()),
+                  );
+                },
+                backgroundColor: Colors.white,
+                child: const Text(
+                  'All Services',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(
           height: 15,

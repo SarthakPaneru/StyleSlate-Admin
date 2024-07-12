@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:barberside/Screen/addservice/modalsheet.dart';
+import 'package:barberside/Screen/allservice/allservice_model.dart';
 import 'package:barberside/Screen/charts/Top5cutomer_model.dart';
 // import 'package:barberside/Screen/charts/accordion_mode.dart';
 import 'package:barberside/Screen/charts/bargraph/model.dart';
@@ -197,6 +198,18 @@ class ApiRequests {
       return data.map((service) => ServiceData.fromJson(service)).toList();
     } else {
       throw Exception('Failed to load service data');
+    }
+  }
+
+// Fetch services from API
+  Future<List<Service>> fetchServices() async {
+    final response = await _apiService.get('/service/get-all');
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse.map((service) => Service.fromJson(service)).toList();
+    } else {
+      throw Exception('Failed to load services');
     }
   }
 
