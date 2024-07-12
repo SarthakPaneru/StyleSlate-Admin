@@ -21,6 +21,7 @@ class ApiRequests {
     http.Response response = await _apiService
         .get('${ApiConstants.usersEndpoint}/get-logged-in-user');
     print('Logged in users status ${response.statusCode}');
+    // print('USER DATa: ${response.body}');
     if (response.statusCode == 200) {
       // Successful login
       return response;
@@ -30,7 +31,6 @@ class ApiRequests {
           MaterialPageRoute(builder: (context) => const Login()));
       throw Future.error(
           'Login failed with status code: ${response.statusCode}');
-          
     }
   }
 

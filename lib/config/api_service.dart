@@ -35,13 +35,17 @@ class ApiService {
 
       print('HERE ');
       print(response.body);
-      processData(response.body);
-      if (response.statusCode==400 || response.statusCode==401) {
+      // processData(response.body);
+      if (response.statusCode == 400 || response.statusCode == 401) {
         // Perform navigation using the global navigator key
+        print('Token expired');
         Mainpage.navigatorKey.currentState?.pushReplacement(
-          MaterialPageRoute(builder: (context) => const Login()));
+            MaterialPageRoute(builder: (context) => const Login()));
+        throw Future.error(
+            'Login failed with status code: ${response.statusCode}');
+      } else {
+        return response;
       }
-      return response;
     } catch (e) {
       return http.Response({"message": e}.toString(), 400);
     }
