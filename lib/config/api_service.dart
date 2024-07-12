@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -36,8 +38,8 @@ class ApiService {
       processData(response.body);
       if (response.statusCode==400 || response.statusCode==401) {
         // Perform navigation using the global navigator key
-        navigatorKey.currentState?.pushReplacement(
-          MaterialPageRoute(builder: (context) => Login()));
+        Mainpage.navigatorKey.currentState?.pushReplacement(
+          MaterialPageRoute(builder: (context) => const Login()));
       }
       return response;
     } catch (e) {

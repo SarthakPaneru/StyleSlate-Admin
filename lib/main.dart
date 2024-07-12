@@ -6,14 +6,12 @@ import 'package:barberside/Notification/notification_controller.dart';
 import 'package:barberside/Screen/splash_screen.dart';
 // ignore_for_file: avoid_print
 
-import 'package:barberside/Screen/mainscreen.dart';
 import 'package:barberside/config/api_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:awesome_notifications/awesome_notifications.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   // Always initialize Awesome Notifications
@@ -27,11 +25,14 @@ Future<void> main() async {
 class Mainpage extends StatefulWidget {
   const Mainpage({super.key});
 
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   State<Mainpage> createState() => _MainpageState();
 }
 
 class _MainpageState extends State<Mainpage> {
+  
   static const String routeHome = '/', routeNotification = '/notification-page';
 
   @override
@@ -78,7 +79,7 @@ class _MainpageState extends State<Mainpage> {
     return MaterialApp(
       theme: ThemeData.light(useMaterial3: true),
       debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
+      navigatorKey: Mainpage.navigatorKey,
       home: SplashScreen(),
     );
   }

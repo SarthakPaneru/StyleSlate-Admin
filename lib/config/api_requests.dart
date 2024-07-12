@@ -1,5 +1,13 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
+import 'package:barberside/Screen/charts/accordion_mode.dart';
+import 'package:barberside/Screen/charts/bargraph/model.dart';
+import 'package:barberside/Screen/charts/piechart/model.dart';
+import 'package:barberside/Screen/login.dart';
+import 'package:barberside/main.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../auth/customer.dart';
 import 'api_service.dart';
@@ -18,8 +26,11 @@ class ApiRequests {
       return response;
     } else {
       print('Login failed with status code: ${response.statusCode}');
+      Mainpage.navigatorKey.currentState?.pushReplacement(
+          MaterialPageRoute(builder: (context) => const Login()));
       throw Future.error(
           'Login failed with status code: ${response.statusCode}');
+          
     }
   }
 
@@ -97,25 +108,6 @@ class ApiRequests {
     return response;
   }
 
-  Future<http.Response> sendLocationData(
-      double latitude, double longitude) async {
-    final String url = 'https://your_api_endpoint';
-    final Map<String, dynamic> body = {
-      'latitude': latitude,
-      'longitude': longitude,
-    };
-
-    http.Response response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(body),
-    );
-
-    return response;
-  }
-
   Future<String> retrieveImageUrl() async {
     Customer customer = Customer();
     final userId = await customer.retrieveUserId();
@@ -180,5 +172,41 @@ class ApiRequests {
       int barberId, String status) async {
     return await _apiService.get(
         '${ApiConstants.appointmentEndpoint}/get/barber/$barberId?status=$status');
+  }
+
+  Future<List<Category>> fetchCategoryData(int barberId) async {
+    final response = await _apiService
+        .get('/analytics/getCategoryForAppointment?barberId=$barberId');
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((category) => Category.fromJson(category)).toList();
+    } else {
+      throw Exception('Failed to load category data');
+    }
+  }
+
+  Future<List<ServiceData>> fetchServiceData(int barberId) async {
+    final response = await _apiService
+        .get('/analytics/getServiceNameForAppointment?barberId=$barberId');
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      return data.map((service) => ServiceData.fromJson(service)).toList();
+    } else {
+      throw Exception('Failed to load service data');
+    }
+  }
+
+  Future<List<CustomerCategory>> fetchCustomerCategories(int barberId) async {
+    final response = await _apiService
+        .get('/analytics/getTopCustomerByCategory?barberId=$barberId');
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = json.decode(response.body);
+      return CustomerCategory.fromJsonList(jsonList);
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 }

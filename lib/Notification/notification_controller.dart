@@ -93,7 +93,7 @@ class NotificationController {
 
   static Future<void> onActionReceivedImplementationMethod(
       ReceivedAction receivedAction) async {
-      navigatorKey.currentState?.pushNamedAndRemoveUntil(
+      Mainpage.navigatorKey.currentState?.pushNamedAndRemoveUntil(
         '/notification-page',
         (route) =>
             (route.settings.name != '/notification-page') || route.isFirst,
@@ -106,7 +106,7 @@ class NotificationController {
   ///
   static Future<bool> displayNotificationRationale() async {
     bool userAuthorized = false;
-    BuildContext context = navigatorKey.currentContext!;
+    BuildContext context = Mainpage.navigatorKey.currentContext!;
     await showDialog(
         context: context,
         builder: (BuildContext ctx) {
