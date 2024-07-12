@@ -57,6 +57,8 @@ dependencies:
   fl_chart: ^0.68.0
   awesome_notifications: ^0.9.3+1
   accordion: ^2.6.0
+  google_fonts: ^6.2.1
+
   
 
 dev_dependencies:

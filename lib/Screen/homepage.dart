@@ -1,7 +1,10 @@
-import 'package:barberside/Screen/charts/accordion_mode.dart';
+import 'package:barberside/Screen/addservice/modalsheet.dart';
+import 'package:barberside/Screen/charts/Top5cutomer_model.dart';
+// import 'package:barberside/Screen/charts/accordion_mode.dart';
 import 'package:barberside/Screen/charts/bargraph/bargraph.dart';
 import 'package:barberside/Screen/charts/piechart/piechart.dart';
 import 'package:barberside/Screen/custom_card.dart';
+
 import 'package:barberside/Widgets/category.dart';
 import 'package:barberside/auth/category_model.dart';
 import 'package:barberside/config/api_requests.dart';
@@ -61,10 +64,10 @@ class _HomepageState extends State<Homepage> {
                 SizedBox(height: screenHeight * 0.02),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Analytics Section",
                         style: TextStyle(
                           color: Colors.white,
@@ -72,12 +75,17 @@ class _HomepageState extends State<Homepage> {
                           fontSize: 20,
                         ),
                       ),
-                      Text(
-                        "See all",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                          fontSize: 16,
+                      SizedBox(
+                        width: 140,
+                        height: 40,
+                        child: FloatingActionButton(
+                          backgroundColor: Colors.white,
+                          onPressed: () => showAddServiceModal(context),
+                          child: const Text(
+                            'Add Service',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
                         ),
                       ),
                     ],
@@ -126,36 +134,66 @@ class _HomepageState extends State<Homepage> {
                         ),
                       ),
                       if (isLoading)
-                        Center(child: CircularProgressIndicator())
+                        const Center(child: CircularProgressIndicator())
                       else if (customerCategories.isEmpty)
                         Container(
                           height: screenHeight * 0.3,
                           width: screenWidth * 0.9,
                           alignment: Alignment.center,
-                          child: Text(
+                          child: const Text(
                             'No customer categories data available.',
                             style: TextStyle(color: Colors.white),
                           ),
                         )
                       else
                         CustomCard(
-                          title: 'Customer Categories',
+                          title: 'Top Customer By Categories',
                           height: screenHeight * 0.3,
                           width: screenWidth * 0.9,
                           child: ListView.builder(
                             itemCount: customerCategories.length,
                             itemBuilder: (context, index) {
                               final category = customerCategories[index];
-                              return ListTile(
-                                title: Text(
-                                  '${category.firstName} ${category.lastName}',
-                                  style: const TextStyle(color: Colors.white),
+                              return Card(
+                                color: const Color(0xff454656),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
                                 ),
-                                subtitle: Text(
-                                  'Category: ${category.category}\n'
-                                  'Category Count: ${category.categoryCount}\n'
-                                  'Customer ID: ${category.customerId}',
-                                  style: const TextStyle(color: Colors.white70),
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${category.firstName} ${category.lastName}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        'Category: ${category.category}',
+                                        style: const TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        'Category Count: ${category.categoryCount}',
+                                        style: const TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                    ],
+                                  ),
                                 ),
                               );
                             },

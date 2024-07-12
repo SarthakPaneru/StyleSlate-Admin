@@ -1,8 +1,7 @@
 import 'package:barberside/Screen/profile/size_config.dart';
 import 'package:flutter/material.dart';
 
-
-const kPrimaryColor = Color(0xFFFF7643);
+const kPrimaryColor = Color(0xFFFFECDF);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,

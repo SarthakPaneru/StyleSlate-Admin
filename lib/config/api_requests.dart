@@ -2,7 +2,9 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:barberside/Screen/charts/accordion_mode.dart';
+import 'package:barberside/Screen/addservice/modalsheet.dart';
+import 'package:barberside/Screen/charts/Top5cutomer_model.dart';
+// import 'package:barberside/Screen/charts/accordion_mode.dart';
 import 'package:barberside/Screen/charts/bargraph/model.dart';
 import 'package:barberside/Screen/charts/piechart/model.dart';
 import 'package:barberside/Screen/login.dart';
@@ -207,6 +209,30 @@ class ApiRequests {
       return CustomerCategory.fromJsonList(jsonList);
     } else {
       throw Exception('Failed to load data');
+    }
+  }
+
+  Future<http.Response> postServiceData(AddServiceData data) async {
+    final body = json.encode({
+      'serviceName': data.serviceName,
+      'fee': data.fee,
+      'serviceTimeInMinutes': data.serviceTimeInMinutes,
+      'category': data.category,
+    });
+
+    try {
+      final http.Response response =
+          await _apiService.post('/service/create', body);
+
+      if (response.statusCode == 200) {
+        print('Data posted successfully');
+      } else {
+        print('Failed to post data: ${response.statusCode}');
+      }
+      return response;
+    } catch (error) {
+      print('Error posting data: $error');
+      return http.Response('Error posting data', 400);
     }
   }
 }
