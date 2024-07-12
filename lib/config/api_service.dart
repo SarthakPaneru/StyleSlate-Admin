@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:barberside/Screen/login.dart';
+import 'package:barberside/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -34,8 +35,9 @@ class ApiService {
       print(response.body);
       processData(response.body);
       if (response.statusCode==400 || response.statusCode==401) {
-        Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const Login()));
+        // Perform navigation using the global navigator key
+        navigatorKey.currentState?.pushReplacement(
+          MaterialPageRoute(builder: (context) => Login()));
       }
       return response;
     } catch (e) {
