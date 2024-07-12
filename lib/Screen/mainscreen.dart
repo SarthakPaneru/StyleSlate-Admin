@@ -68,8 +68,8 @@ class _MainScreenState extends State<MainScreen> {
       extendBody: true,
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: const Icon(Icons.add),
         backgroundColor: Colors.amber,
+        child: const Icon(Icons.add),
       ),
       // backgroundColor: Colors.brown,
       // appBar: AppBar(
