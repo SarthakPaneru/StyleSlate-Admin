@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Scaffold(
+      home: const Scaffold(
         body: Body(),
       ),
     );
@@ -280,8 +280,8 @@ class ProfilePage extends StatelessWidget {
             fit: StackFit.expand,
             clipBehavior: Clip.none,
             children: [
-              CircleAvatar(
-                backgroundImage: AssetImage("assets/images/Profile Image.png"),
+              const CircleAvatar(
+                backgroundImage: AssetImage("lib/assets/Profile Image.png"),
               ),
               Positioned(
                 right: -16,
@@ -294,9 +294,9 @@ class ProfilePage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
-                        side: BorderSide(color: Colors.white),
+                        side: const BorderSide(color: Colors.white),
                       ),
-                      backgroundColor: Color(0xFFF5F6F9),
+                      backgroundColor: const Color(0xFFF5F6F9),
                     ),
                     onPressed: () {},
                     child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
@@ -314,28 +314,29 @@ class ProfilePage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
-                        side: BorderSide(color: Colors.white),
+                        side: const BorderSide(color: Colors.white),
                       ),
-                      backgroundColor: Color(0xFFF5F6F9),
+                      backgroundColor: const Color(0xFFF5F6F9),
                     ),
                     onPressed: onUpdateLocation,
-                    child: Icon(Icons.location_on, color: Color(0xFF323345)),
+                    child:
+                        const Icon(Icons.location_on, color: Color(0xFF323345)),
                   ),
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Text(
           firstName,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
         Text(
           locationName,
-          style: TextStyle(fontSize: 16, color: Colors.white70),
+          style: const TextStyle(fontSize: 16, color: Colors.white70),
         ),
       ],
     );

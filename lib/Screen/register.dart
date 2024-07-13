@@ -85,7 +85,7 @@ class _RegisterState extends State<Register>
 
         if (response.statusCode == 201) {
           _showSnackbar('Successfully registered!', isError: false);
-          await Future.delayed(Duration(seconds: 2));
+          await Future.delayed(const Duration(seconds: 2));
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (BuildContext context) => const Login(),
@@ -177,7 +177,7 @@ class _RegisterState extends State<Register>
                             ),
                           ),
                           const SizedBox(height: 30),
-                          Text(
+                          const Text(
                             'Create Account',
                             style: TextStyle(
                               fontSize: 32,
@@ -346,7 +346,7 @@ class _RegisterState extends State<Register>
       SnackBar(
         content: Text(
           message,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
         duration: const Duration(seconds: 3),
         behavior: SnackBarBehavior.floating,

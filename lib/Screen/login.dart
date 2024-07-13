@@ -47,7 +47,7 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     passwordVisible = true;
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 300),
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
@@ -179,14 +179,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                               ),
                               child: ClipOval(
                                 child: Image.asset(
-                                  'lib/assets/images/barberlogo.png',
+                                  'lib/assets/barber_logo.png',
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 30),
-                          Text(
+                          const Text(
                             'Welcome Back',
                             style: TextStyle(
                               fontSize: 32,

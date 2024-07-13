@@ -26,7 +26,7 @@ class CategorySection extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              width: 180,
+              width: 100,
             ),
             SizedBox(
               width: 125,
