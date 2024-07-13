@@ -1,149 +1,214 @@
-import 'package:flutter/material.dart';
-import '/Widgets/appbar.dart';
-import '/Widgets/buttons.dart';
-import '/Widgets/colors.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
+
+import '/Widgets/appbar.dart';
 
 class Forgetpassword extends StatefulWidget {
-  const Forgetpassword({super.key});
+  const Forgetpassword({Key? key}) : super(key: key);
 
   @override
   State<Forgetpassword> createState() => _ForgetpasswordState();
 }
 
-class _ForgetpasswordState extends State<Forgetpassword> {
+class _ForgetpasswordState extends State<Forgetpassword>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _emailController = TextEditingController();
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+  bool _isLoading = false;
+  String? _emailError;
+
+  static const Color backgroundColor = Color(0xFF323345);
+  static const Color accentColor = Color(0xFF8B8FA7);
+  static const Color textColor = Color(0xFFE0E0E0);
+  static const Color buttonColor = Color(0xFF4A4D64);
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _animation =
+        CurvedAnimation(parent: _animationController, curve: Curves.elasticOut);
+    _animationController.forward();
+    _emailController.addListener(_validateEmail);
+  }
+
   @override
   void dispose() {
-    _emailController
-        .dispose(); // Dispose of the controller when no longer needed
+    _emailController.removeListener(_validateEmail);
+    _emailController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
+  void _validateEmail() {
+    setState(() {
+      if (_emailController.text.isEmpty) {
+        _emailError = 'Email is required';
+      } else if (!EmailValidator.validate(_emailController.text)) {
+        _emailError = 'Please enter a valid email address';
+      } else {
+        _emailError = null;
+      }
+    });
+  }
+
+  void _showSnackBar(String message, {bool isError = false}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isError ? Colors.red[700] : accentColor,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        action: SnackBarAction(
+          label: 'Dismiss',
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+          textColor: Colors.white,
+        ),
+      ),
+    );
+  }
+
   void _forgotpassword() {
-    String email = _emailController.text;
-    final bool isValid = EmailValidator.validate(_emailController.text.trim());
-
-    if (email.isEmpty) {
-      print('$email');
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Please fill  email address field .'),
-            actions: <Widget>[
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+    if (_emailError != null) {
+      _showSnackBar(_emailError!, isError: true);
       return;
     }
-    if (isValid == false) {
-      print('$email');
 
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Please insert correct email address.'),
-            actions: <Widget>[
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-      return;
-    }
+    setState(() {
+      _isLoading = true;
+    });
+
+    // Simulating API call
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
+      _showSnackBar('Verification code sent to your email');
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: MyAppBar(
-            title: 'Forget Password',
-            onpressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: MyAppBar(
+          title: 'Forget Password',
+          onpressed: () => Navigator.of(context).pop(),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.only(left: 15, right: 15),
-            child: Center(
-              child: Column(
-                children: [
-                  const SizedBox(height: 25),
-                  const SizedBox(height: 25),
-                  Container(
-                    height: 180,
-                    width: 180,
-                    decoration: BoxDecoration(
-                      color: PrimaryColors.primarybrown,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: const Icon(
-                      Icons.lock_outline,
-                      size: 110,
-                      color: Colors.white,
-                    ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+              ScaleTransition(
+                scale: _animation,
+                child: Container(
+                  height: 160,
+                  width: 160,
+                  decoration: BoxDecoration(
+                    color: accentColor.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                        color: accentColor.withOpacity(0.5), width: 2),
                   ),
-                  const SizedBox(height: 25),
-                  SizedBox(
-                    width: 280,
-                    child: Text(
-                      'Please Enter Your Email Address To Receive a Verification Code.',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
-                          color: PrimaryColors.primarybrown),
-                      textAlign: TextAlign.center,
-                    ),
+                  child: Icon(
+                    Icons.lock_outline,
+                    size: 80,
+                    color: accentColor.withOpacity(0.7),
                   ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: _emailController,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade400),
-                      ),
-                      fillColor: Colors.grey.shade200,
-                      filled: true,
-                      hintStyle: TextStyle(color: Colors.grey[500]),
-                      labelText: 'Enter Email Address',
-                      icon: const Icon(Icons.mail),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  CustomButton(
-                    label: 'Send Code',
-                    icon: null,
-                    onpressed: _forgotpassword,
-                  )
-                ],
+                ),
               ),
-            ),
+              const SizedBox(height: 40),
+              Text(
+                'Forgot Your Password?',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28,
+                  color: textColor,
+                  letterSpacing: 0.5,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Enter your email address to receive a verification code.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: textColor.withOpacity(0.7),
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 40),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email Address',
+                  labelStyle: TextStyle(color: textColor.withOpacity(0.7)),
+                  prefixIcon:
+                      Icon(Icons.email, color: accentColor.withOpacity(0.7)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: accentColor.withOpacity(0.3)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: accentColor, width: 2),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: accentColor.withOpacity(0.3)),
+                  ),
+                  filled: true,
+                  fillColor: buttonColor.withOpacity(0.3),
+                  errorText: _emailError,
+                  errorStyle: TextStyle(color: Colors.red[300]),
+                ),
+                style: TextStyle(color: textColor),
+                keyboardType: TextInputType.emailAddress,
+              ),
+              const SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: _isLoading ? null : _forgotpassword,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: buttonColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  elevation: 0,
+                ),
+                child: _isLoading
+                    ? SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          color: textColor,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Text(
+                        'Send Code',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: textColor,
+                        ),
+                      ),
+              ),
+            ],
           ),
         ),
       ),

@@ -1,15 +1,105 @@
 import 'package:barberside/Screen/login.dart';
 import 'package:barberside/Screen/profile/changepassword.dart';
+import 'package:barberside/auth/barber.dart';
 import 'package:barberside/auth/token.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Myaccount.dart';
 import 'helpcenterscreen.dart';
-import 'profile.dart';
 
-class Body extends StatelessWidget {
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Barber Profile',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: Scaffold(
+        body: Body(),
+      ),
+    );
+  }
+}
+
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
+
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  final barber = Barber();
+  String _firstName = '';
+  double longitude = 0;
+  double latitude = 0;
+  String _locationName = 'loading ...';
+  bool _isloading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserDetails();
+    getLocation();
+    loadLocation();
+  }
+
+  void getUserDetails() async {
+    final firstName = await barber.retrieveFirstName();
+    setState(() {
+      _firstName = firstName ?? '';
+      _isloading = false;
+    });
+  }
+
+  void getLocation() async {
+    LocationPermission permission = await Geolocator.requestPermission();
+    Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    setState(() {
+      longitude = position.longitude;
+      latitude = position.latitude;
+      _isloading = false;
+    });
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('longitude', longitude);
+    await prefs.setDouble('latitude', latitude);
+
+    getAddressFromLatLng(latitude, longitude);
+  }
+
+  void getAddressFromLatLng(double lat, double lng) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+      Placemark place = placemarks[0];
+      setState(() {
+        _locationName = "${place.locality}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void loadLocation() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      longitude = prefs.getDouble('longitude') ?? 0;
+      latitude = prefs.getDouble('latitude') ?? 0;
+    });
+    getAddressFromLatLng(latitude, longitude);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +120,11 @@ class Body extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
           child: Column(
             children: [
-              const ProfilePage(),
+              ProfilePage(
+                firstName: _firstName,
+                locationName: _locationName,
+                onUpdateLocation: getLocation,
+              ),
               const SizedBox(height: 20),
               _buildProfileMenu(
                 context,
@@ -159,6 +253,91 @@ class Body extends StatelessWidget {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const Login()),
       (Route<dynamic> route) => false,
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  final String firstName;
+  final String locationName;
+  final VoidCallback onUpdateLocation;
+
+  const ProfilePage({
+    Key? key,
+    required this.firstName,
+    required this.locationName,
+    required this.onUpdateLocation,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 115,
+          width: 115,
+          child: Stack(
+            fit: StackFit.expand,
+            clipBehavior: Clip.none,
+            children: [
+              CircleAvatar(
+                backgroundImage: AssetImage("assets/images/Profile Image.png"),
+              ),
+              Positioned(
+                right: -16,
+                bottom: 0,
+                child: SizedBox(
+                  height: 46,
+                  width: 46,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        side: BorderSide(color: Colors.white),
+                      ),
+                      backgroundColor: Color(0xFFF5F6F9),
+                    ),
+                    onPressed: () {},
+                    child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: -16,
+                bottom: 0,
+                child: SizedBox(
+                  height: 46,
+                  width: 46,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                        side: BorderSide(color: Colors.white),
+                      ),
+                      backgroundColor: Color(0xFFF5F6F9),
+                    ),
+                    onPressed: onUpdateLocation,
+                    child: Icon(Icons.location_on, color: Color(0xFF323345)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 20),
+        Text(
+          firstName,
+          style: TextStyle(
+              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 5),
+        Text(
+          locationName,
+          style: TextStyle(fontSize: 16, color: Colors.white70),
+        ),
+      ],
     );
   }
 }
