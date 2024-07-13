@@ -2,7 +2,7 @@ name: barberside
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.5 <4.0.0'
+  sdk: ">=3.0.5 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,11 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  email_validator: ^2.1.17
+  email_validator: ^3.0.0
   google_nav_bar: ^5.0.6
   http: ^1.1.0
   flutter_secure_storage: ^9.2.2
@@ -50,16 +49,14 @@ dependencies:
   cached_network_image: ^3.3.0
   intl: ^0.19.0
   flutter_svg: ^2.0.10+1
-  flutter_gemini: ^2.0.4
-  google_generative_ai: ^0.4.3
   stomp_dart_client: ^2.0.0
   shared_preferences: ^2.2.3
   fl_chart: ^0.68.0
   awesome_notifications: ^0.9.3+1
   accordion: ^2.6.0
   google_fonts: ^6.2.1
-
-  
+  geocoding: ^3.0.0
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:
@@ -77,7 +74,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -85,43 +81,41 @@ flutter:
 
   #To add assets to your application, add an assets section, like this:
   assets:
-# <<<<<<< HEAD
-#     - lib/assets/barberlogo.png
-#     - lib/assets/stylist2.png
-#     - lib/assets/OIG2.jpeg
-    
-# =======
+    # <<<<<<< HEAD
+    #     - lib/assets/barberlogo.png
+    #     - lib/assets/stylist2.png
+    #     - lib/assets/OIG2.jpeg
+
+    # =======
     - lib/assets/
     - lib/assets/icons/haircut.svg
     - lib/assets/icons/beard.svg
     - lib/assets/icons/facial.svg
     - lib/assets/icons/massage.svg
-
-
 # >>>>>>> 2f1bf2faab48b13bd13f8e74d2ec4bb7df0b6dc2
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
+# An image asset can refer to one or more resolution-specific "variants", see
+# https://flutter.dev/assets-and-images/#resolution-aware
 
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+# For details regarding adding assets from package dependencies, see
+# https://flutter.dev/assets-and-images/#from-packages
 
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+# To add custom fonts to your application, add a fonts section here,
+# in this "flutter" section. Each entry in this list should have a
+# "family" key with the font family name, and a "fonts" key with a
+# list giving the asset and other descriptors for the font. For
+# example:
+# fonts:
+#   - family: Schyler
+#     fonts:
+#       - asset: fonts/Schyler-Regular.ttf
+#       - asset: fonts/Schyler-Italic.ttf
+#         style: italic
+#   - family: Trajan Pro
+#     fonts:
+#       - asset: fonts/TrajanPro.ttf
+#       - asset: fonts/TrajanPro_Bold.ttf
+#         weight: 700
+#
+# For details regarding fonts from package dependencies,
+# see https://flutter.dev/custom-fonts/#from-packages
